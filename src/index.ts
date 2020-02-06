@@ -1,3 +1,4 @@
+import * as invariant from 'invariant'
 import * as path from 'object-path'
 import { pipe } from './utilities'
 /**
@@ -13,12 +14,18 @@ export type ElementMap = Element[]
  *
  */
 export const transform = (input: InputModel, map: ElementMap): KVObject => {
-  const output = {}
-  map.forEach(([source, target, ...transformFns]) => {
-    const args = Array.isArray(source)
-      ? source.map(key => path.get(input, key))
-      : path.get(input, source)
-    path.set(output, target, pipe(...transformFns)(args))
-  })
-  return output
+  invariant(
+    input instanceof Array || input instanceof Object,
+    'Array or Object only for transformer input.'
+  )
+  invariant(map instanceof Array, 'Map must be an array of transforms')
+
+  // Use Reduce
+  return map.reduce((output, [srcKey, dstKey, ...transformFns]) => {
+    const args = Array.isArray(srcKey)
+      ? srcKey.map(key => path.get(input, key))
+      : path.get(input, srcKey)
+    path.set(output, dstKey, pipe(...transformFns)(args))
+    return output
+  }, {})
 }
