@@ -1,10 +1,15 @@
-import { transform, ElementMap } from '../src'
+import { transform } from '../src'
 
 /**
  * Dummy test
  */
 describe('Transformer', () => {
-  describe('Object Input', () => {
+  it('Should always return an object', () => {
+    expect(transform([], [])).toMatchObject({})
+    expect(transform({}, [])).toMatchObject({})
+  })
+
+  describe('Object > Object', () => {
     it('Should be able to perform a simple key/value switch', () => {
       expect(
         transform({ one: 'one', two: 'two' }, [
@@ -51,8 +56,8 @@ describe('Transformer', () => {
     })
   })
 
-  describe('Array Input', () => {
-    it('Should accept an empty array as input.', () => {
+  describe('Array > Object', () => {
+    it('Should accept an empty array as input without any transforms.', () => {
       expect(transform([], [])).toBeTruthy()
     })
 

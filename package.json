@@ -118,7 +118,6 @@
     "typescript": "^3.0.3"
   },
   "dependencies": {
-    "invariant": "^2.2.4",
     "object-path": "^0.11.4",
     "pipe-and-compose": "0.0.6"
   }
