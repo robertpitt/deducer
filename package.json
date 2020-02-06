@@ -1,15 +1,13 @@
 {
   "name": "data-transformer",
   "version": "0.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "Apply a transfomration map to reshape and process your data.",
+  "keywords": ["transform", "process", "composable", "unpack", "reshape", "transpose"],
   "main": "dist/data-transformer.umd.js",
   "module": "dist/data-transformer.es5.js",
   "typings": "dist/types/data-transformer.d.ts",
-  "files": [
-    "dist"
-  ],
-  "author": " <>",
+  "files": [ "dist" ],
+  "author": "Robert Pitt <robertpitt1988@gmail.com>",
   "repository": {
     "type": "git",
     "url": ""
@@ -62,10 +60,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 90,
-        "functions": 95,
-        "lines": 95,
-        "statements": 95
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
       }
     },
     "collectCoverageFrom": [
@@ -85,20 +83,20 @@
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
     "@types/invariant": "^2.2.31",
-    "@types/jest": "^23.3.2",
-    "@types/node": "^10.11.0",
+    "@types/jest": "^25.1.2",
+    "@types/node": "^13.7.0",
     "@types/object-path": "^0.11.0",
-    "colors": "^1.3.2",
+    "colors": "^1.4.0",
     "commitizen": "^3.0.0",
-    "coveralls": "^3.0.2",
+    "coveralls": "^3.0.9",
     "cross-env": "^5.2.0",
     "cz-conventional-changelog": "^2.1.0",
     "husky": "^1.0.1",
-    "jest": "^23.6.0",
-    "jest-config": "^23.6.0",
-    "lint-staged": "^8.0.0",
+    "jest": "^25.1.0",
+    "jest-config": "^25.1.0",
+    "lint-staged": "^10.0.7",
     "lodash.camelcase": "^4.3.0",
-    "prettier": "^1.14.3",
+    "prettier": "^1.19.1",
     "prompt": "^1.0.0",
     "replace-in-file": "^3.4.2",
     "rimraf": "^2.6.2",
@@ -110,8 +108,8 @@
     "rollup-plugin-typescript2": "^0.18.0",
     "semantic-release": "^15.9.16",
     "shelljs": "^0.8.3",
-    "travis-deploy-once": "^5.0.9",
-    "ts-jest": "^23.10.2",
+    "travis-deploy-once": "^5.0.11",
+    "ts-jest": "^25.2.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
@@ -121,6 +119,7 @@
   },
   "dependencies": {
     "invariant": "^2.2.4",
-    "object-path": "^0.11.4"
+    "object-path": "^0.11.4",
+    "pipe-and-compose": "0.0.6"
   }
 }
