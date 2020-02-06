@@ -1,6 +1,6 @@
 {
   "name": "data-transformer",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Apply a transfomration map to reshape and process your data.",
   "keywords": ["transform", "process", "composable", "unpack", "reshape", "transpose"],
   "main": "dist/data-transformer.umd.js",
