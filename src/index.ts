@@ -6,8 +6,7 @@ import * as path from 'object-path'
 export type TransformationMap = [path.Path, path.Path, ...AnyFunction[]][]
 
 // Transform an input based on a map of transform actions
-export const transform = (input: object, map: TransformationMap): object => {
-  // Use Reduce
+export const deduce = (input: object, map: TransformationMap): object => {
   return map.reduce((o, [sourcePath, targetPath, ...transforms]) => {
     // Create a new transform stack that will process the current value
     const transform = pipe(

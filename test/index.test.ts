@@ -1,18 +1,18 @@
-import { transform } from '../src'
+import { deduce } from '../src'
 
 /**
  * Dummy test
  */
-describe('Transformer', () => {
+describe('Deducer', () => {
   it('Should always return an object', () => {
-    expect(transform([], [])).toMatchObject({})
-    expect(transform({}, [])).toMatchObject({})
+    expect(deduce([], [])).toMatchObject({})
+    expect(deduce({}, [])).toMatchObject({})
   })
 
   describe('Object > Object', () => {
     it('Should be able to perform a simple key/value switch', () => {
       expect(
-        transform({ one: 'one', two: 'two' }, [
+        deduce({ one: 'one', two: 'two' }, [
           ['one', 'two'],
           ['two', 'one']
         ])
@@ -21,7 +21,7 @@ describe('Transformer', () => {
 
     it('Should be able to perform mutations on the value via a pipeline', () => {
       expect(
-        transform({ one: 'one', two: 'two' }, [
+        deduce({ one: 'one', two: 'two' }, [
           ['one', 'two', (v: string) => v.toUpperCase()],
           ['two', 'one', (v: string) => v.toUpperCase()]
         ])
@@ -30,7 +30,7 @@ describe('Transformer', () => {
 
     it('Should be able to use nested objects', () => {
       expect(
-        transform({ a: { a: 'c' }, b: { b: 'c' } }, [
+        deduce({ a: { a: 'c' }, b: { b: 'c' } }, [
           ['a.a', 'a.b'],
           ['b.b', 'b.a']
         ])
@@ -39,13 +39,13 @@ describe('Transformer', () => {
 
     it('Should be able Pick multiple values into the transformer', () => {
       expect(
-        transform({ a: 1, b: 1 }, [
+        deduce({ a: 1, b: 1 }, [
           [['a', 'b'], 'result', ([a, b]: [number, number]) => a + b, (sum: number) => sum * 2]
         ])
       ).toMatchObject({ result: 4 })
 
       expect(
-        transform({ date: '2020-01-01', time: '00:00:00' }, [
+        deduce({ date: '2020-01-01', time: '00:00:00' }, [
           [
             ['date', 'time'],
             'dateTime',
@@ -58,16 +58,16 @@ describe('Transformer', () => {
 
   describe('Array > Object', () => {
     it('Should accept an empty array as input without any transforms.', () => {
-      expect(transform([], [])).toBeTruthy()
+      expect(deduce([], [])).toBeTruthy()
     })
 
     it('Should trasnform Array into Object', () => {
-      expect(transform([], [])).toMatchObject({})
+      expect(deduce([], [])).toMatchObject({})
     })
 
     it('Should be able to pick root values', () => {
       expect(
-        transform(
+        deduce(
           ['val1', 'val2'],
           [
             [0, 'val1'],
@@ -79,7 +79,7 @@ describe('Transformer', () => {
 
     it('Should be able to pick nested values', () => {
       expect(
-        transform(
+        deduce(
           [[[['some value']]], [[['some other value']]]],
           [
             ['0.0.0.0', 'val1'],
@@ -137,7 +137,7 @@ describe('Transformer', () => {
       ]
 
       // Transform
-      const result = transform(input, [
+      const result = deduce(input, [
         [1, 'booking.products', trim, toUpper],
         [2, 'booking.reference', trim, toUpper],
         [6, 'booking.noPassengers', Number],

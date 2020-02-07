@@ -1,43 +1,51 @@
-# Transformer
-This project is aimed at providing a simple but effective solution for transforming/reshaping both data structure and values using a declarative approach.
+# Deducer
+This project is aimed at providing a simple but effective solution for deducing/transforming/reshaping data.
 
-A transform is described as the following signature `[sourcePath, destPath, transformFn, ...transformFns]`, The transform function will take an input object or array and allow you to reshape that input data into an object that is constructed based on a list of transforms
+A deduction is described as the following signature `[sourcePath, destPath, ...transformFns]`, The deduce function will take an input object/array and an array of deductions, reducing each deduction and deduction transforms while migrating the data to an output object.
+
+### Under Development
+This library is currently under development as is not consisdered stable, if you are interested in supporting this project there are several key areas that require work before a stable version is available
+
+- [ ] Finalisation of the API
+- [ ] Improved typescript support
+- [ ] Documentation
+- [ ] Richer and more diverse tests suite.
 
 ### Install
 
 ```bash
-npm install github:robertpitt/transformer#master
+npm install --save deducer
 ```
 
 Simple Example:
 ```ts
-import { transform } from "<project-name-tbd>"
+import { deduce } from "deducer"
 
 const input = { columnA: 'valueB' };
 const transforms = [
     ['columnA', 'columnB']
 ]
-const result = transform(input, transforms)
+const result = deduce(input, transforms)
 // { columbB: 'valueB' }
 ```
 
 Array Example:
 
 ```ts
-import { transform } from "<project-name-tbd>"
+import { transform } from "deducer"
 
 const input = ['some', 'values'];
 const transforms = [
     [0, 'zero'],
     [1, 'one']
 ]
-const result = transform(input, transforms)
+const result = deduce(input, transforms)
 ```
 
 Transform Example:
 
 ```ts
-import { transform } from "<project-name-tbd>"
+import { transform } from "deducer"
 
 const input = { title: "Mr", firstName: "John", lastName: "Doe" };
 const transforms = [
@@ -45,12 +53,13 @@ const transforms = [
     ["firstName", 'user.firstName'],
     ["lastName", 'user.lastName'],
     [
+        // Paths can contain multiple keys
         ["title", "firstName", "lastName"],
         'user.fullName',
         ([title, firstName, lastName]) => `${title} ${firstName} ${lastName}`
     ],
 ]
-const result = transform(input, transforms)
+const result = deduce(input, transforms)
 // { user: { title: "Mr", firstName: "John", lastName: "Doe", fullName: "Mr John Doe"  }}
 ```
 

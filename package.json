@@ -1,8 +1,9 @@
 {
-  "name": "data-transformer",
-  "version": "0.0.1",
+  "name": "deducer",
+  "version": "0.0.3",
   "description": "Apply a transfomration map to reshape and process your data.",
   "keywords": [
+    "deduce",
     "transform",
     "process",
     "composable",
@@ -10,16 +11,16 @@
     "reshape",
     "transpose"
   ],
-  "main": "dist/data-transformer.umd.js",
-  "module": "dist/data-transformer.es5.js",
-  "typings": "dist/types/data-transformer.d.ts",
+  "main": "dist/deducer.umd.js",
+  "module": "dist/deducer.es5.js",
+  "typings": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
   "author": "Robert Pitt <robertpitt1988@gmail.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/robertpitt/deducer.git"
   },
   "license": "MIT",
   "engines": {
@@ -68,12 +69,7 @@
       "/test/"
     ],
     "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
+      "global": 100
     },
     "collectCoverageFrom": [
       "src/*.{js,ts}"
