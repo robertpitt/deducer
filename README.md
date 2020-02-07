@@ -32,7 +32,7 @@ const result = deduce(input, transforms)
 Array Example:
 
 ```ts
-import { transform } from "deducer"
+import { deduce } from "deducer"
 
 const input = ['some', 'values'];
 const transforms = [
@@ -45,7 +45,7 @@ const result = deduce(input, transforms)
 Transform Example:
 
 ```ts
-import { transform } from "deducer"
+import { deduce } from "deducer"
 
 const input = { title: "Mr", firstName: "John", lastName: "Doe" };
 const transforms = [

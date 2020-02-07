@@ -1,4 +1,4 @@
-import { AnyFunction, PipeFn } from '@babakness/pipe-compose-types'
+import { AnyFunction } from '@babakness/pipe-compose-types'
 import { pipe } from 'pipe-and-compose'
 import * as path from 'object-path'
 
