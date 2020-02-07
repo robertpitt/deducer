@@ -9,9 +9,7 @@ A transform is described as the following signature `[sourcePath, destPath, tran
 npm install github:robertpitt/transformer#master
 ```
 
-<details><summery>Simple Example:</summery>
-<p>
-
+Simple Example:
 ```ts
 import { transform } from "<project-name-tbd>"
 
@@ -22,11 +20,8 @@ const transforms = [
 const result = transform(input, transforms)
 // { columbB: 'valueB' }
 ```
-</p>
-</details>
 
-<details><summery>Array Example:</summery>
-<p>
+Array Example:
 
 ```ts
 import { transform } from "<project-name-tbd>"
@@ -38,11 +33,8 @@ const transforms = [
 ]
 const result = transform(input, transforms)
 ```
-</p>
-</details>
 
-<details><summery>Transform Example:</summery>
-<p>
+Transform Example:
 
 ```ts
 import { transform } from "<project-name-tbd>"
@@ -59,10 +51,8 @@ const transforms = [
     ],
 ]
 const result = transform(input, transforms)
-// { title: "Mr", firstName: "John", lastName: "Doe", fullName: "Mr John Doe" }
+// { user: { title: "Mr", firstName: "John", lastName: "Doe", fullName: "Mr John Doe"  }}
 ```
-</p>
-</details>
 
 ### NPM scripts
 
