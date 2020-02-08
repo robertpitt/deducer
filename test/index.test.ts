@@ -13,8 +13,8 @@ describe('Deducer', () => {
     it('Should be able to perform a simple key/value switch', () => {
       expect(
         deduce({ one: 'one', two: 'two' }, [
-          ['one', 'two'],
-          ['two', 'one']
+          { source: 'one', destination: 'two' },
+          { source: 'two', destination: 'one' }
         ])
       ).toMatchObject({ two: 'one', one: 'two' })
     })
@@ -22,8 +22,8 @@ describe('Deducer', () => {
     it('Should be able to perform mutations on the value via a pipeline', () => {
       expect(
         deduce({ one: 'one', two: 'two' }, [
-          ['one', 'two', (v: string) => v.toUpperCase()],
-          ['two', 'one', (v: string) => v.toUpperCase()]
+          { source: 'one', destination: 'two', reducers: [ (v: string) => v.toUpperCase() ] },
+          { source: 'two', destination: 'one', reducers: [ (v: string) => v.toUpperCase() ] }
         ])
       ).toMatchObject({ two: 'ONE', one: 'TWO' })
     })
@@ -31,8 +31,8 @@ describe('Deducer', () => {
     it('Should be able to use nested objects', () => {
       expect(
         deduce({ a: { a: 'c' }, b: { b: 'c' } }, [
-          ['a.a', 'a.b'],
-          ['b.b', 'b.a']
+          { source: 'a.a', destination: 'a.b' },
+          { source: 'b.b', destination: 'b.a' }
         ])
       ).toMatchObject({ a: { b: 'c' }, b: { a: 'c' } })
     })
@@ -40,17 +40,17 @@ describe('Deducer', () => {
     it('Should be able Pick multiple values into the transformer', () => {
       expect(
         deduce({ a: 1, b: 1 }, [
-          [['a', 'b'], 'result', ([a, b]: [number, number]) => a + b, (sum: number) => sum * 2]
+          { source: ['a', 'b'], destination: 'result', reducers: [([a, b]: [number, number]) => a + b, (sum: number) => sum * 2]},
         ])
       ).toMatchObject({ result: 4 })
 
       expect(
         deduce({ date: '2020-01-01', time: '00:00:00' }, [
-          [
-            ['date', 'time'],
-            'dateTime',
-            ([date, time]: [string, string]) => new Date(date + `T` + time + `.000Z`).toISOString()
-          ]
+          {
+            source: ['date', 'time'],
+            destination: 'dateTime',
+            reducers: [ ([date, time]: [string, string]) => new Date(date + `T` + time + `.000Z`).toISOString() ]
+          }
         ])
       ).toMatchObject({ dateTime: '2020-01-01T00:00:00.000Z' })
     })
@@ -70,8 +70,8 @@ describe('Deducer', () => {
         deduce(
           ['val1', 'val2'],
           [
-            [0, 'val1'],
-            [1, 'val2']
+            { source: 0, destination: 'val1' },
+            { source: 1, destination: 'val2' }
           ]
         )
       ).toMatchObject({ val1: 'val1', val2: 'val2' })
@@ -82,8 +82,8 @@ describe('Deducer', () => {
         deduce(
           [[[['some value']]], [[['some other value']]]],
           [
-            ['0.0.0.0', 'val1'],
-            ['1.0.0.0', 'val2']
+            { source: '0.0.0.0', destination: 'val1' },
+            { source: '1.0.0.0', destination: 'val2' }
           ]
         )
       ).toMatchObject({ val1: 'some value', val2: 'some other value' })
@@ -138,25 +138,25 @@ describe('Deducer', () => {
 
       // Transform
       const result = deduce(input, [
-        [1, 'booking.products', trim, toUpper],
-        [2, 'booking.reference', trim, toUpper],
-        [6, 'booking.noPassengers', Number],
-        [[8, 7], 'booking.startDateTime', toDate],
-        [[13, 14], 'booking.endDateTime', toDate],
-        [10, 'booking.statusCode', trim, toUpper],
-        [11, 'booking.priceExclTax', trim, Number],
-        [12, 'booking.price', trim, Number],
-        [3, 'customer.surname', trim, toUpper],
-        [4, 'customer.title', trim, toUpper],
-        [5, 'customer.initial', trim, toUpper],
-        [15, 'customer.vehicle.model', trim, toUpper],
-        [16, 'customer.vehicle.registration', trim, toUpper],
-        [17, 'customer.vehicle.color', trim, toUpper],
-        [18, 'customer.vehicle.make', trim, toUpper],
-        [21, 'customer.contact.primary', trim],
-        [22, 'customer.contact.secondary', trim],
-        [26, 'flight.inboundCode', trim, toUpper],
-        [29, 'flight.outboundCode', trim, toUpper]
+        { source: 1, destination: 'booking.products', reducers: [ trim, toUpper ] },
+        { source: 2, destination: 'booking.reference', reducers: [ trim, toUpper ] },
+        { source: 6, destination: 'booking.noPassengers', reducers: [Number] },
+        { source: [8, 7], destination: 'booking.startDateTime', reducers: [ toDate ] },
+        { source: [13, 14], destination: 'booking.endDateTime', reducers: [ toDate ] },
+        { source: 10, destination: 'booking.statusCode', reducers: [ trim, toUpper ] },
+        { source: 11, destination: 'booking.priceExclTax', reducers: [ trim, Number] },
+        { source: 12, destination: 'booking.price', reducers: [ trim, Number ] },
+        { source: 3, destination: 'customer.surname', reducers: [ trim, toUpper ] },
+        { source: 4, destination: 'customer.title', reducers: [ trim, toUpper ] },
+        { source: 5, destination: 'customer.initial', reducers: [ trim, toUpper ] },
+        { source: 15, destination: 'customer.vehicle.model', reducers: [ trim, toUpper ] },
+        { source: 16, destination: 'customer.vehicle.registration', reducers: [ trim, toUpper ] },
+        { source: 17, destination: 'customer.vehicle.color', reducers: [ trim, toUpper ] },
+        { source: 18, destination: 'customer.vehicle.make', reducers: [ trim, toUpper ] },
+        { source: 21, destination: 'customer.contact.primary', reducers: [ trim] },
+        { source: 22, destination: 'customer.contact.secondary', reducers: [ trim] },
+        { source: 26, destination: 'flight.inboundCode', reducers: [ trim, toUpper ] },
+        { source: 29, destination: 'flight.outboundCode', reducers: [ trim, toUpper] }
       ])
 
       //Ouput
