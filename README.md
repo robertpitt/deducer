@@ -19,47 +19,57 @@ npm install --save deducer
 
 Simple Example:
 ```ts
-import { deduce, TransformationMap } from "deducer"
+import { deduce, Deduction } from "deducer"
 
 const input = { columnA: 'valueB' };
-const transforms: TransformationMap = [
-    ['columnA', 'columnB']
+const deductions: Deduction[] = [
+    { source: 'columnA', destination: 'columnB' }
 ]
-const result = deduce(input, transforms)
+const result = deduce(input, deductions)
 // { columbB: 'valueB' }
 ```
 
 Array Example:
 
 ```ts
-import { deduce, TransformationMap } from "deducer"
+import { deduce, Deduction } from "deducer"
 
 const input = ['some', 'values'];
-const transforms: TransformationMap = [
-    [0, 'zero'],
-    [1, 'one']
+const deductions: Deduction[] = [
+    { source: 0, destination: 'zero' }
+    { source: 1, destination: 'one' }
 ]
-const result = deduce(input, transforms)
+const result = deduce(input, deductions)
 ```
 
-Transform Example:
+Deductions Example:
 
 ```ts
-import { deduce, TransformationMap } from "deducer"
+import { deduce, Deduction } from "deducer"
 
 const input = { title: "Mr", firstName: "John", lastName: "Doe" };
-const transforms: TransformationMap = [
-    ["title", 'user.title'],
-    ["firstName", 'user.firstName'],
-    ["lastName", 'user.lastName'],
-    [
-        // Paths can contain multiple keys
-        ["title", "firstName", "lastName"],
-        'user.fullName',
-        ([title, firstName, lastName]) => `${title} ${firstName} ${lastName}`
-    ],
+const deductions: Deduction[] = [
+    {
+        source: 'title',
+        destination: 'user.title'
+    },
+    {
+        source: 'firstName',
+        destination: 'user.firstName'
+    },
+    {
+        source: 'lastName',
+        destination: 'user.lastName'
+    },
+    {
+        source: ["title", "firstName", "lastName"],
+        destination: 'user.fullName',
+        reducers: [
+            ([title, firstName, lastName]) => `${title} ${firstName} ${lastName}`
+        ]
+    },
 ]
-const result = deduce(input, transforms)
+const result = deduce(input, deductions)
 // { user: { title: "Mr", firstName: "John", lastName: "Doe", fullName: "Mr John Doe"  }}
 ```
 
