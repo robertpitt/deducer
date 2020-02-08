@@ -1,6 +1,6 @@
 {
   "name": "deducer",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Apply a transfomration map to reshape and process your data.",
   "keywords": [
     "deduce",
