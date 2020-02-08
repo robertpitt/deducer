@@ -19,10 +19,10 @@ npm install --save deducer
 
 Simple Example:
 ```ts
-import { deduce } from "deducer"
+import { deduce, TransformationMap } from "deducer"
 
 const input = { columnA: 'valueB' };
-const transforms = [
+const transforms: TransformationMap = [
     ['columnA', 'columnB']
 ]
 const result = deduce(input, transforms)
@@ -32,10 +32,10 @@ const result = deduce(input, transforms)
 Array Example:
 
 ```ts
-import { deduce } from "deducer"
+import { deduce, TransformationMap } from "deducer"
 
 const input = ['some', 'values'];
-const transforms = [
+const transforms: TransformationMap = [
     [0, 'zero'],
     [1, 'one']
 ]
@@ -45,10 +45,10 @@ const result = deduce(input, transforms)
 Transform Example:
 
 ```ts
-import { deduce } from "deducer"
+import { deduce, TransformationMap } from "deducer"
 
 const input = { title: "Mr", firstName: "John", lastName: "Doe" };
-const transforms = [
+const transforms: TransformationMap = [
     ["title", 'user.title'],
     ["firstName", 'user.firstName'],
     ["lastName", 'user.lastName'],
