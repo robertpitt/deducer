@@ -1,7 +1,7 @@
 # Deducer
 This project is aimed at providing a simple but effective solution for deducing/transforming/reshaping data.
 
-A deduction is described as the following signature `[sourcePath, destPath, ...transformFns]`, The deduce function will take an input object/array and an array of deductions, reducing each deduction and deduction transforms while migrating the data to an output object.
+A deduction is described as the following signature `{ source: Path, desstination?: Path, reducers?: Function[]]`, The deduce function will take an input object and an array of deductions, each deduction will be responsible for cosuming parts of the input in order to produce a new value in the output.
 
 ### Under Development
 This library is currently under development as is not consisdered stable, if you are interested in supporting this project there are several key areas that require work before a stable version is available
@@ -40,6 +40,7 @@ const deductions: Deduction[] = [
     { source: 1, destination: 'one' }
 ]
 const result = deduce(input, deductions)
+// { zero: 'some', one: 'values' }
 ```
 
 Deductions Example:
@@ -70,7 +71,7 @@ const deductions: Deduction[] = [
     },
 ]
 const result = deduce(input, deductions)
-// { user: { title: "Mr", firstName: "John", lastName: "Doe", fullName: "Mr John Doe"  }}
+// { user: { title: "Mr", firstName: "John", lastName: "Doe", fullName: "Mr John Doe"  } }
 ```
 
 ### NPM scripts
