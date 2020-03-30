@@ -10,14 +10,6 @@ describe('Deducer', () => {
   })
 
   describe('Object > Object', () => {
-    it('destination should be default to the source location if not present', () => {
-      expect(
-        deduce({ one: 'one', two: 'two' }, [
-          { source: 'one' },
-          { source: 'two', destination: 'renamed' }
-        ])
-      ).toMatchObject({ one: 'one', renamed: 'two' })
-    })
 
     it('Should be able to perform a simple key/value switch', () => {
       expect(
