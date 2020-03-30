@@ -11,8 +11,10 @@ jobs:
       with:
         node-version: '10.x'
     - name: Build and Test
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
-        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+        echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
         npm install
         npm run build
         npm run test
